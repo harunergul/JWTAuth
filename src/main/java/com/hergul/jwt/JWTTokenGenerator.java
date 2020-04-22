@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Calendar;
+import java.util.Date;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -30,11 +31,13 @@ public class JWTTokenGenerator {
 
 	}
 
-	public static String generateToken(TokenClaimer tokenClaimer) {
-		JwtBuilder builder = Jwts.builder().setSubject("users/" + tokenClaimer.getAppointmentId())
-				.setExpiration(tokenClaimer.getExpireDate());
+	public static String generateToken(TokenClaimer tokenClaimer, Date date) {
+		JwtBuilder builder = Jwts.builder()
+				// .setSubject("users/" + tokenClaimer.getAppointmentId())
+				.setExpiration(date);
+		builder.claim("appId", "avicennakimodrsitesi");
 		builder.claim("claimers", tokenClaimer);
-		builder.claim("scope", "This is scope value");
+		// builder.claim("scope", "This is scope value");
 
 		String jwt = builder.signWith(SignatureAlgorithm.HS256, getSigningKey()).compact();
 		return jwt;
@@ -44,7 +47,7 @@ public class JWTTokenGenerator {
 		try {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(getSigningKey()).parseClaimsJws(jwt);
 			String scope = (String) claims.getBody().get("scope");
-			System.out.println(scope);
+			// System.out.println(scope);
 
 			return true;
 		} catch (Exception e) {
@@ -69,20 +72,22 @@ public class JWTTokenGenerator {
 
 	public static void main(String... strings) {
 		TokenClaimer claimer = new TokenClaimer();
-		claimer.setAppointmentId(445454454L);
-		claimer.setPatientName("Hasan Akarca");
-		claimer.setPatientNo("5454546");
-		claimer.setRoomName("Roomname");
+
+		claimer.setSessionId("123456");
+		claimer.setRoomName("DoktorSifaVericiHastaOrnekSaglam-445454454");
+		claimer.setAttenderType("Doktor");
+		claimer.setModeratorNo("123");
+		claimer.setModeratorName("Ahmet Akasya");
+		claimer.setAttenderNo("456");
+		claimer.setAttenderName("Hasan Yaman");
 
 		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.add(Calendar.DAY_OF_MONTH, 15); // same with c.add(Calendar.DAY_OF_MONTH, 1);
 
-		claimer.setExpireDate(cal.getTime());
-		String jwt = generateToken(claimer);
+		String jwt = generateToken(claimer, cal.getTime());
 		System.out.println(jwt);
-		System.out.println(isTokenValid(jwt));
+		// System.out.println(isTokenValid(jwt));
 
 	}
-	
-	
+
 }
