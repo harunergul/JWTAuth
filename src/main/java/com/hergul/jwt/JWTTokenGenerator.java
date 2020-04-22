@@ -74,7 +74,7 @@ public class JWTTokenGenerator {
 		TokenClaimer claimer = new TokenClaimer();
 
 		claimer.setSessionId("123456");
-		claimer.setRoomName("DoktorSifaVericiHastaOrnekSaglam-445454454");
+		claimer.setRoomName("DoktorSifaVericiHastaOrnekSaglam-44545445224");
 		claimer.setAttenderType("Doktor");
 		claimer.setModeratorNo("123");
 		claimer.setModeratorName("Ahmet Akasya");
@@ -82,8 +82,20 @@ public class JWTTokenGenerator {
 		claimer.setAttenderName("Hasan Yaman");
 
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, 15); // same with c.add(Calendar.DAY_OF_MONTH, 1);
+		cal.add(Calendar.DAY_OF_MONTH, 1); // same with c.add(Calendar.DAY_OF_MONTH, 1);
 
+		cal.set(Calendar.HOUR_OF_DAY, 14);
+		cal.set(Calendar.MINUTE, 20);
+		cal.set(Calendar.SECOND, 0);
+		
+		claimer.setMeetingStartTime(cal.getTime());
+		
+		cal.set(Calendar.HOUR_OF_DAY, 14);
+		cal.set(Calendar.MINUTE, 40);
+		cal.set(Calendar.SECOND, 0);
+		
+		claimer.setMeetingEndTime(cal.getTime());
+		
 		String jwt = generateToken(claimer, cal.getTime());
 		System.out.println(jwt);
 		// System.out.println(isTokenValid(jwt));
