@@ -84,18 +84,24 @@ public class JWTTokenGenerator {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, 1); // same with c.add(Calendar.DAY_OF_MONTH, 1);
 
+		cal.set(Calendar.HOUR_OF_DAY, 1);
+		cal.set(Calendar.MINUTE, 18);
+		cal.set(Calendar.SECOND, 0);
+		
+		claimer.setActivateDate(cal.getTime());
+
 		cal.set(Calendar.HOUR_OF_DAY, 14);
 		cal.set(Calendar.MINUTE, 20);
 		cal.set(Calendar.SECOND, 0);
-		
-		claimer.setMeetingStartTime(cal.getTime());
-		
-		cal.set(Calendar.HOUR_OF_DAY, 14);
-		cal.set(Calendar.MINUTE, 40);
+
+		claimer.setMeetingStartDate(cal.getTime());
+
+		cal.set(Calendar.HOUR_OF_DAY, 15);
+		cal.set(Calendar.MINUTE, 20);
 		cal.set(Calendar.SECOND, 0);
-		
-		claimer.setMeetingEndTime(cal.getTime());
-		
+
+		claimer.setMeetingEndDate(cal.getTime());
+
 		String jwt = generateToken(claimer, cal.getTime());
 		System.out.println(jwt);
 		// System.out.println(isTokenValid(jwt));

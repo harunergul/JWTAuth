@@ -13,9 +13,10 @@ public class TokenClaimer implements Serializable {
 	public String moderatorName;
 	public String attenderNo;
 	public String attenderName;
-	public Date meetingStartTime;
-	public Date meetingEndTime;
-	
+	public Date activateDate;
+	public Date meetingStartDate;
+	public Date meetingEndDate;
+
 	public String getRoomName() {
 		return roomName;
 	}
@@ -72,23 +73,28 @@ public class TokenClaimer implements Serializable {
 		this.sessionId = sessionId;
 	}
 
-	public Date getMeetingStartTime() {
-		return meetingStartTime;
+	public Date getActivateDate() {
+		return activateDate;
 	}
 
-	public void setMeetingStartTime(Date meetingStartTime) {
-		this.meetingStartTime = meetingStartTime;
+	public void setActivateDate(Date activateDate) {
+		this.activateDate = activateDate;
 	}
 
-	public Date getMeetingEndTime() {
-		return meetingEndTime;
+	public Date getMeetingStartDate() {
+		return meetingStartDate;
 	}
 
-	public void setMeetingEndTime(Date meetingEndTime) {
-		this.meetingEndTime = meetingEndTime;
+	public void setMeetingStartDate(Date meetingStartDate) {
+		this.meetingStartDate = meetingStartDate;
 	}
-	
-	
-	
+
+	public Date getMeetingEndDate() {
+		return meetingEndDate;
+	}
+
+	public void setMeetingEndDate(Date meetingEndDate) {
+		this.meetingEndDate = meetingEndDate;
+	}
 
 }
