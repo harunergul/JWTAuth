@@ -21,7 +21,7 @@ public class JWTTokenGenerator {
 
 	public static void loadAppSecret() {
 		try {
-			URL url = JWTTokenGenerator.class.getClassLoader().getResource("secret.txt");
+			URL url = JWTTokenGenerator.class.getClassLoader().getResource("avicennakimoerc.txt");
 			appSecret = new String(Files.readAllBytes(Paths.get(url.toURI())));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -31,11 +31,11 @@ public class JWTTokenGenerator {
 
 	}
 
-	public static String generateToken(TokenClaimer tokenClaimer, Date date) {
+	public static String generateToken(TokenClaimer tokenClaimer, Date date, String appId) {
 		JwtBuilder builder = Jwts.builder()
 				// .setSubject("users/" + tokenClaimer.getAppointmentId())
 				.setExpiration(date);
-		builder.claim("appId", "avicennakimodrsitesi");
+		builder.claim("appId", appId);
 		builder.claim("claimers", tokenClaimer);
 		// builder.claim("scope", "This is scope value");
 
@@ -69,42 +69,55 @@ public class JWTTokenGenerator {
 		}
 		return null;
 	}
+	
+	public static Date getDateFromSeconds(Long seconds ) {
+		return  new Date(seconds * 1000);
+	}
 
 	public static void main(String... strings) {
 		TokenClaimer claimer = new TokenClaimer();
 
-		claimer.setSessionId("122122");
-		claimer.setRoomName("DoktorSifaVericiHastaVeliIylesen-44545445224");
-		claimer.setAttenderType("Doktor");
-		claimer.setModeratorNo("123");
-		claimer.setModeratorName("Sifa Verici");
-		claimer.setAttenderNo("456");
-		claimer.setAttenderName("Veli Iylesen");
+		String appId = "avicennakimoerc";
+		
+		claimer.setSessionId("1");
+		claimer.setRoomName("SazakAilesi");
+		claimer.setAttenderType("Genel");
+		claimer.setModeratorNo("1");
+		claimer.setModeratorName("Emin Sazak");
+		claimer.setAttenderNo("2");
+		claimer.setAttenderName("Aile");
+		claimer.setActivateDate(getDateFromSeconds(1587600000L));
+		
+		
+		//activate Date 
 
-		Calendar cal = Calendar.getInstance();
+	//	Calendar cal = Calendar.getInstance();
 	//	cal.add(Calendar.DAY_OF_MONTH, 1); // same with c.add(Calendar.DAY_OF_MONTH, 1);
 
-		cal.set(Calendar.HOUR_OF_DAY, 1);
-		cal.set(Calendar.MINUTE, 18);
-		cal.set(Calendar.SECOND, 0);
+ 
+//		cal.set(Calendar.HOUR_OF_DAY, 1);
+//		cal.set(Calendar.MINUTE, 18);
+//		cal.set(Calendar.SECOND, 0);
 		
-		claimer.setActivateDate(cal.getTime());
-
-		cal.set(Calendar.HOUR_OF_DAY, 12);
-		cal.set(Calendar.MINUTE, 25);
-		cal.set(Calendar.SECOND, 0);
-
-		claimer.setMeetingStartDate(cal.getTime());
-
-		cal.set(Calendar.HOUR_OF_DAY, 15);
-		cal.set(Calendar.MINUTE, 20);
-		cal.set(Calendar.SECOND, 0);
+//		claimer.setActivateDate(cal.getTime());
+//
+//		cal.set(Calendar.HOUR_OF_DAY, 12);
+//		cal.set(Calendar.MINUTE, 25);
+//		cal.set(Calendar.SECOND, 0);
+//
+//		claimer.setMeetingStartDate(cal.getTime());
+//
+//		cal.set(Calendar.HOUR_OF_DAY, 15);
+//		cal.set(Calendar.MINUTE, 20);
+//		cal.set(Calendar.SECOND, 0);
 
 		
-		cal.add(Calendar.DAY_OF_MONTH, 10); // same with c.add(Calendar.DAY_OF_MONTH, 1);
-		claimer.setMeetingEndDate(cal.getTime());
+//		cal.add(Calendar.DAY_OF_MONTH, 10); // same with c.add(Calendar.DAY_OF_MONTH, 1);
+//		claimer.setMeetingEndDate(cal.getTime());
 
-		String jwt = generateToken(claimer, cal.getTime());
+		
+//		String jwt = generateToken(claimer, cal.getTime(), appId);
+		String jwt = generateToken(claimer, getDateFromSeconds(2534284800L), appId);
 		System.out.println(jwt);
 		// System.out.println(isTokenValid(jwt));
 
